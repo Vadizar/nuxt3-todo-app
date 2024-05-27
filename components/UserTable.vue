@@ -26,10 +26,14 @@
                         </router-link>
                     </td>
                     <td class="users__cell">
-                        {{ user.email }}
+                        <a :href="'mailto:' + user.email">
+                            {{ user.email }}
+                        </a>
                     </td>
                     <td class="users__cell">
-                        {{ user.phone }}
+                        <a :href="'tel:' + user.phone">
+                            {{ user.phone }}
+                        </a>
                     </td>
                 </tr>
             </tbody>
@@ -52,51 +56,52 @@
         </div>
     </div>
 </template>
-  
+
 <script lang="ts" setup>
 import { ref, computed, watch } from 'vue'
-  
+import type { User } from '@/types/User'
+
 const props = defineProps<{
-    users: Array<{ id: number; name: string; email: string; phone: string }>
+    users: Array<User>
     page: number
     searchQuery: string
-  }>()
+}>()
 
 const emit = defineEmits(['update:page', 'update:searchQuery'])
-  
+
 const page = ref(props.page)
 const searchQuery = ref(props.searchQuery)
-  
+
 const filteredUsers = computed(() => {
     return props.users.filter(user =>
         user.name.toLowerCase().includes(searchQuery.value.toLowerCase())
     ).slice((page.value - 1) * 5, page.value * 5)
 })
-  
+
 const hasMoreUsers = computed(() => {
     return props.users.filter(user =>
         user.name.toLowerCase().includes(searchQuery.value.toLowerCase())
     ).length > page.value * 5
 })
-  
+
 const nextPage = () => {
     if (hasMoreUsers.value) {
         page.value++
         emit('update:page', page.value)
     }
 }
-  
+
 const prevPage = () => {
     if (page.value > 1) {
         page.value--
         emit('update:page', page.value)
     }
 }
-  
+
 watch(() => props.page, (newPage) => {
     page.value = newPage
 })
-  
+
 watch(() => props.searchQuery, (newQuery) => {
     searchQuery.value = newQuery
 })
