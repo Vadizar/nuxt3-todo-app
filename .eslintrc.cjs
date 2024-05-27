@@ -1,0 +1,42 @@
+module.exports = {
+    root: true,
+    env: {
+        node: true,
+        browser: true,
+    },
+    parser: 'vue-eslint-parser',
+    parserOptions: {
+        parser: '@typescript-eslint/parser',
+        ecmaVersion: 2020,
+        sourceType: 'module',
+    },
+    extends: [
+        'eslint:recommended',
+        'plugin:vue/vue3-recommended',
+        'plugin:@typescript-eslint/recommended',
+    ],
+    rules: {
+        'vue/multi-word-component-names': 'off',
+        '@typescript-eslint/explicit-module-boundary-types': 'off',
+        "@typescript-eslint/no-explicit-any": ["off"],
+        'no-console': process.env.NODE_ENV === 'production' ? 'error' : 0,
+        'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 0,
+        'max-len': ['error', { code: 170 }],
+        indent: ['error', 4],
+        semi: ['error', 'never'],
+        camelcase: 0,
+        'valid-typeof': 0,
+        'no-return-assign': 0,
+        'no-param-reassign': 0,
+        'no-prototype-builtins': 0,
+        'import/extensions': 0,
+        'import/no-unresolved': 0,
+        'no-restricted-globals': ['error', 'event'],
+        'func-names': ['error', 'never'],
+        'vue/no-mutating-props': 0,
+        'vue/no-unused-components': 0,
+        'vue/html-indent': ['error', 4],
+        'vue/multi-word-component-names': 0,
+    },
+}
+  
