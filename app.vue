@@ -1,15 +1,21 @@
 <template>
-    <header>
-        <nav>
-            <NuxtLink to="/">
+    <header class="header">
+        <nav class="header__nav">
+            <NuxtLink
+                class="header__link"
+                to="/"
+            >
                 Home
             </NuxtLink>
-            <NuxtLink to="/users">
+            <NuxtLink
+                class="header__link"
+                to="/users"
+            >
                 Users
             </NuxtLink>
         </nav>
     </header>
-    <main>
+    <main class="main">
         <NuxtPage />
     </main>
 </template>
@@ -24,18 +30,22 @@ body
     padding: 0
     box-sizing: border-box
 
-header
+button
+    cursor: pointer
+
+.header
     background-color: #333
     color: white
     padding: 1rem
+    &__nav
+        display: flex
+        gap: 1rem
+    &__link
+        color: white
+        text-decoration: none
+        &:hover
+            text-decoration: underline
 
-nav
-    display: flex
-    gap: 1rem
-
-main
+.main
     padding: 1rem
-
-button
-    cursor: pointer
 </style>

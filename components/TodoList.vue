@@ -3,7 +3,9 @@
         Loading...
     </div>
     <div v-show="!isLoading">
-        <h2>{{ userName }}</h2>
+        <h1 @click="navigateToUser()">
+            {{ userName }}
+        </h1>
         <button @click="goBack">
             Back to Users
         </button>
@@ -50,6 +52,10 @@ const fetchTodos = async () => {
     } finally {
         isLoading.value = false
     }
+}
+
+const navigateToUser = () => {
+    router.push(`/users/${userId}`)
 }
 
 const goBack = () => {
