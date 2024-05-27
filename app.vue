@@ -20,9 +20,6 @@
     </main>
 </template>
 
-<script lang="ts" setup>
-</script>
-
 <style lang="sass">
 body
     font-family: Arial, sans-serif
