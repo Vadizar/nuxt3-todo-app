@@ -21,12 +21,9 @@
                     class="users__row"
                 >
                     <td class="users__cell">
-                        <a
-                            href="javascript:void(0)"
-                            @click="navigateToTodos(user.id)"
-                        >
+                        <router-link :to="{ path: '/todos/' + user.id }">
                             {{ user.name }}
-                        </a>
+                        </router-link>
                     </td>
                     <td class="users__cell">
                         {{ user.email }}
@@ -58,7 +55,6 @@
   
 <script lang="ts" setup>
 import { ref, computed, watch } from 'vue'
-import { useRouter } from 'vue-router'
   
 const props = defineProps<{
     users: Array<{ id: number; name: string; email: string; phone: string }>
@@ -67,7 +63,6 @@ const props = defineProps<{
   }>()
   
 const emit = defineEmits(['update:page', 'update:searchQuery'])
-const router = useRouter()
   
 const page = ref(props.page)
 const searchQuery = ref(props.searchQuery)
@@ -98,10 +93,6 @@ const prevPage = () => {
     }
 }
   
-const navigateToTodos = (userId: number) => {
-    router.push(`/todos/${userId}`)
-}
-  
 watch(() => props.page, (newPage) => {
     page.value = newPage
 })
@@ -123,6 +114,7 @@ watch(() => props.searchQuery, (newQuery) => {
         padding: 0.75rem
         text-align: left
         border-bottom: 1px solid #ddd
+        width: 33.33%
 
     &__header
         background-color: #f2f2f2
