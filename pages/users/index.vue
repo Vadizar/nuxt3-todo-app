@@ -8,12 +8,12 @@
         placeholder="Search by name"
         @input="onSearch"
     >
-    <div v-if="isLoading">
+    <div v-if="store.isLoading">
         Loading...
     </div>
     <UserTable
         v-else
-        :users="users"
+        :users="store.users"
         :page="currentPage"
         :search-query="searchQuery"
         @update:page="onPageUpdate"
@@ -23,22 +23,16 @@
 <script lang="ts" setup>
 import { ref, watchEffect } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useUserStore } from '@/store'
+
 import UserTable from '~/components/UserTable.vue'
   
 const route = useRoute()
 const router = useRouter()
+const store = useUserStore()
   
-const users = ref([])
 const currentPage = ref(parseInt(route.query.page as string) || 1)
 const searchQuery = ref(route.query.search as string || '')
-const isLoading = ref(false)
-  
-const fetchUsers = async () => {
-    isLoading.value = true
-    const response = await fetch('https://jsonplaceholder.typicode.com/users')
-    users.value = await response.json()
-    isLoading.value = false
-}
   
 const onSearch = () => {
     currentPage.value = 1
@@ -51,10 +45,15 @@ const onPageUpdate = (newPage: number) => {
 }
   
 const updateRoute = () => {
-    router.push({ query: { page: currentPage.value.toString(), search: searchQuery.value } })
+    router.push({
+        query: {
+            page: currentPage.value.toString(),
+            search: searchQuery.value,
+        }
+    })
 }
   
-watchEffect(fetchUsers)
+watchEffect(store.fetchUsers)
 watchEffect(() => {
     currentPage.value = parseInt(route.query.page as string) || 1
     searchQuery.value = route.query.search as string || ''

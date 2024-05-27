@@ -7,6 +7,22 @@ interface State {
     todos: Todo[];
 }
 
+export const useUserStore = defineStore({
+    id: 'users',
+    state: () => ({
+        isLoading: false,
+        users: [],
+    }),
+    actions: {
+        async fetchUsers() {
+            this.isLoading = true
+            const response = await fetch('https://jsonplaceholder.typicode.com/users')
+            this.users = await response.json()
+            this.isLoading = false
+        },
+    }
+})
+
 export const useTodoStore = defineStore({
     id: 'todos',
     state: (): State => ({
@@ -38,6 +54,6 @@ export const useTodoStore = defineStore({
             } finally {
                 this.isLoading = false
             }
-        }
+        },
     }
 })
