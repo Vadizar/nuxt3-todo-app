@@ -32,7 +32,7 @@ const users = ref([])
 const currentPage = ref(parseInt(route.query.page as string) || 1)
 const searchQuery = ref(route.query.search as string || '')
 const isLoading = ref(false)
-  
+
 const fetchUsers = async () => {
     isLoading.value = true
     const response = await fetch('https://jsonplaceholder.typicode.com/users')
