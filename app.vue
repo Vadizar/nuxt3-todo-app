@@ -51,4 +51,18 @@ button
     margin: 10px 0
     color: #333
     font-weight: 400
+
+.button
+    background-color: #4CAF50
+    color: white
+    border: none
+    padding: 0.75rem 1.5rem
+    cursor: pointer
+
+    &:disabled
+        background-color: #ddd
+        cursor: not-allowed
+
+    &:hover:not(:disabled)
+        background-color: #45a049
 </style>

@@ -6,7 +6,10 @@
         <h1 class="headline">
             {{ store.userName }}
         </h1>
-        <button @click="goBack">
+        <button
+            class="button"
+            @click="goBack"
+        >
             Back to Users
         </button>
         <ul>
