@@ -61,7 +61,7 @@ const props = defineProps<{
     page: number
     searchQuery: string
   }>()
-  
+
 const emit = defineEmits(['update:page', 'update:searchQuery'])
   
 const page = ref(props.page)
