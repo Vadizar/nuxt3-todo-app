@@ -15,16 +15,17 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import type { User } from '@/types/User'
 
 const router = useRouter()
 const route = useRoute()
-const userId = route.params.id
+const userId = route.params.id as string
 
-const user = ref<any>({})
+const user = ref<User | null>(null)
 
 const fetchUser = async () => {
     const response = await fetch(`https://jsonplaceholder.typicode.com/users/${userId}`)
-    const data = await response.json()
+    const data: User = await response.json()
     user.value = data
 }
 
@@ -34,4 +35,3 @@ const goBack = () => {
 
 onMounted(fetchUser)
 </script>
-  
