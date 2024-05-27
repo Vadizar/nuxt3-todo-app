@@ -1,6 +1,8 @@
 <template>
     <div>
-        <h1>User Details</h1>
+        <h1 class="headline">
+            User Details
+        </h1>
         <button @click="goBack">
             Back to Todos
         </button>

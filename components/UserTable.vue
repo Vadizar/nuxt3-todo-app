@@ -3,21 +3,37 @@
         <table class="users__table">
             <thead>
                 <tr class="users__row">
-                    <th class="users__header">Name</th>
-                    <th class="users__header">Email</th>
-                    <th class="users__header">Phone</th>
+                    <th class="users__header">
+                        Name
+                    </th>
+                    <th class="users__header">
+                        Email
+                    </th>
+                    <th class="users__header">
+                        Phone
+                    </th>
                 </tr>
             </thead>
             <tbody>
                 <tr
-                    class="users__row"
                     v-for="user in filteredUsers"
                     :key="user.id"
-                    @click="navigateToTodos(user.id)"
+                    class="users__row"
                 >
-                    <td class="users__cell">{{ user.name }}</td>
-                    <td class="users__cell">{{ user.email }}</td>
-                    <td class="users__cell">{{ user.phone }}</td>
+                    <td class="users__cell">
+                        <a
+                            href="javascript:void(0)"
+                            @click="navigateToTodos(user.id)"
+                        >
+                            {{ user.name }}
+                        </a>
+                    </td>
+                    <td class="users__cell">
+                        {{ user.email }}
+                    </td>
+                    <td class="users__cell">
+                        {{ user.phone }}
+                    </td>
                 </tr>
             </tbody>
         </table>

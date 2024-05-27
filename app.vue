@@ -45,4 +45,10 @@ button
 
 .main
     padding: 1rem
+
+.headline
+    font-size: 2rem
+    margin: 10px 0
+    color: #333
+    font-weight: 400
 </style>

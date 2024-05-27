@@ -3,7 +3,10 @@
         Loading...
     </div>
     <div v-show="!isLoading">
-        <h1 @click="navigateToUser()">
+        <h1
+            class="headline"
+            @click="navigateToUser()"
+        >
             {{ userName }}
         </h1>
         <button @click="goBack">

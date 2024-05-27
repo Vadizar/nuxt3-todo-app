@@ -1,7 +1,10 @@
 <template>
-    <h1>Users</h1>
+    <h1 class="headline">
+        Users
+    </h1>
     <input
         v-model="searchQuery"
+        class="search-input"
         placeholder="Search by name"
         @input="onSearch"
     >
@@ -57,3 +60,13 @@ watchEffect(() => {
     searchQuery.value = route.query.search as string || ''
 })
 </script>
+
+<style lang="sass">
+.search-input
+    box-sizing: border-box
+    width: 100%
+    padding: 10px
+    border: 1px solid #ccc
+    border-radius: 4px
+    margin: 10px 0
+</style>
