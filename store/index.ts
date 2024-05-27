@@ -16,8 +16,14 @@ export const useUserStore = defineStore({
     actions: {
         async fetchUsers() {
             this.isLoading = true
-            const response = await fetch('https://jsonplaceholder.typicode.com/users')
-            this.users = await response.json()
+            try {
+                const response = await fetch('https://jsonplaceholder.typicode.com/users')
+                this.users = await response.json()
+            }
+            catch (error) {
+                console.error(error)
+                this.users = []
+            }
             this.isLoading = false
         },
     }
@@ -46,11 +52,12 @@ export const useTodoStore = defineStore({
                     this.fetchUser(userId),
                     this.fetchTodos(userId)
                 ])
-
                 this.userName = userData.name
                 this.todos = todosData
             } catch (error) {
                 console.error(error)
+                this.userName = ''
+                this.todos = []
             } finally {
                 this.isLoading = false
             }

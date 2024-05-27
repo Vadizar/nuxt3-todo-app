@@ -1,8 +1,8 @@
 <template>
-    <div v-show="store.isLoading">
+    <div v-if="store.isLoading">
         <Loading />
     </div>
-    <div v-show="!store.isLoading">
+    <div v-else>
         <h1 class="headline">
             {{ store.userName }}
         </h1>
