@@ -1,33 +1,36 @@
 <template>
-    <div>
-        <table>
+    <div class="users">
+        <table class="users__table">
             <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
+                <tr class="users__row">
+                    <th class="users__header">Name</th>
+                    <th class="users__header">Email</th>
+                    <th class="users__header">Phone</th>
                 </tr>
             </thead>
             <tbody>
                 <tr
+                    class="users__row"
                     v-for="user in filteredUsers"
                     :key="user.id"
                     @click="navigateToTodos(user.id)"
                 >
-                    <td>{{ user.name }}</td>
-                    <td>{{ user.email }}</td>
-                    <td>{{ user.phone }}</td>
+                    <td class="users__cell">{{ user.name }}</td>
+                    <td class="users__cell">{{ user.email }}</td>
+                    <td class="users__cell">{{ user.phone }}</td>
                 </tr>
             </tbody>
         </table>
-        <div>
+        <div class="users__controls">
             <button
+                class="users__button"
                 :disabled="page === 1"
                 @click="prevPage"
             >
                 Previous
             </button>
             <button
+                class="users__button"
                 :disabled="!hasMoreUsers"
                 @click="nextPage"
             >
@@ -91,4 +94,39 @@ watch(() => props.searchQuery, (newQuery) => {
     searchQuery.value = newQuery
 })
 </script>
+
+<style lang="sass">
+.users
+    &__table
+        width: 100%
+        border-collapse: collapse
+        margin-bottom: 2rem
+
+    &__cell,
+    &__header
+        padding: 0.75rem
+        text-align: left
+        border-bottom: 1px solid #ddd
+
+    &__header
+        background-color: #f2f2f2
+
+    &__row:hover
+        background-color: #f5f5f5
+
+    &__button
+        background-color: #4CAF50
+        color: white
+        border: none
+        padding: 0.75rem 1.5rem
+        cursor: pointer
+        margin: 0 0.5rem
+
+        &:disabled
+            background-color: #ddd
+            cursor: not-allowed
+
+        &:hover:not(:disabled)
+            background-color: #45a049
+</style>
   
