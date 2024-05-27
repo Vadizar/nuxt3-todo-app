@@ -1,5 +1,8 @@
 <template>
-    <div>
+    <div v-show="isLoading">
+        Loading...
+    </div>
+    <div v-show="!isLoading">
         <h2>{{ userName }}</h2>
         <button @click="goBack">
             Back to Users
@@ -28,17 +31,25 @@ const router = useRouter()
 const route = useRoute()
 const userId = route.params.userId
 
+const isLoading = ref(false)
 const userName = ref('')
 const todos = ref([])
 
 const fetchTodos = async () => {
-    const userResponse = await fetch(`https://jsonplaceholder.typicode.com/users/${userId}`)
-    const userData = await userResponse.json()
-    userName.value = userData.name
+    isLoading.value = true
+    try {
+        const userPromise = fetch(`https://jsonplaceholder.typicode.com/users/${userId}`).then(response => response.json())
+        const todosPromise = fetch(`https://jsonplaceholder.typicode.com/todos?userId=${userId}`).then(response => response.json())
 
-    const todosResponse = await fetch(`https://jsonplaceholder.typicode.com/todos?userId=${userId}`)
-    const todosData = await todosResponse.json()
-    todos.value = todosData
+        const [userData, todosData] = await Promise.all([userPromise, todosPromise])
+
+        userName.value = userData.name
+        todos.value = todosData
+    } catch (error) {
+        console.error(error)
+    } finally {
+        isLoading.value = false
+    }
 }
 
 const goBack = () => {
@@ -47,4 +58,3 @@ const goBack = () => {
 
 onMounted(fetchTodos)
 </script>
-  

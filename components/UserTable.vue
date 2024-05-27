@@ -1,10 +1,5 @@
 <template>
     <div>
-        <input
-            v-model="searchQuery"
-            placeholder="Search by name"
-            @input="fetchUsers"
-        >
         <table>
             <thead>
                 <tr>
@@ -25,62 +20,75 @@
                 </tr>
             </tbody>
         </table>
-        <button
-            :disabled="page === 1"
-            @click="prevPage"
-        >
-            Previous
-        </button>
-        <button
-            :disabled="!hasMoreUsers"
-            @click="nextPage"
-        >
-            Next
-        </button>
+        <div>
+            <button
+                :disabled="page === 1"
+                @click="prevPage"
+            >
+                Previous
+            </button>
+            <button
+                :disabled="!hasMoreUsers"
+                @click="nextPage"
+            >
+                Next
+            </button>
+        </div>
     </div>
 </template>
   
 <script lang="ts" setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
-
+  
+const props = defineProps<{
+    users: Array<{ id: number; name: string; email: string; phone: string }>
+    page: number
+    searchQuery: string
+  }>()
+  
+const emit = defineEmits(['update:page', 'update:searchQuery'])
 const router = useRouter()
-const users = ref([])
-const page = ref(1)
-const searchQuery = ref('')
-
-const fetchUsers = async () => {
-    const response = await fetch(`https://jsonplaceholder.typicode.com/users`)
-    const data = await response.json()
-    users.value = data
-}
-
+  
+const page = ref(props.page)
+const searchQuery = ref(props.searchQuery)
+  
 const filteredUsers = computed(() => {
-    return users.value.filter(user =>
+    return props.users.filter(user =>
         user.name.toLowerCase().includes(searchQuery.value.toLowerCase())
     ).slice((page.value - 1) * 5, page.value * 5)
 })
-
+  
 const hasMoreUsers = computed(() => {
-    return users.value.length > page.value * 5
+    return props.users.filter(user =>
+        user.name.toLowerCase().includes(searchQuery.value.toLowerCase())
+    ).length > page.value * 5
 })
-
+  
 const nextPage = () => {
     if (hasMoreUsers.value) {
         page.value++
+        emit('update:page', page.value)
     }
 }
-
+  
 const prevPage = () => {
     if (page.value > 1) {
         page.value--
+        emit('update:page', page.value)
     }
 }
-
+  
 const navigateToTodos = (userId: number) => {
     router.push(`/todos/${userId}`)
 }
-
-onMounted(fetchUsers)
+  
+watch(() => props.page, (newPage) => {
+    page.value = newPage
+})
+  
+watch(() => props.searchQuery, (newQuery) => {
+    searchQuery.value = newQuery
+})
 </script>
   
