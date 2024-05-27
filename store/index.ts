@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
 import type { Todo } from '@/types/Todo'
 
+const endpoint = 'https://jsonplaceholder.typicode.com'
+
 interface State {
     isLoading: boolean;
     userName: string;
@@ -17,7 +19,7 @@ export const useUserStore = defineStore({
         async fetchUsers() {
             this.isLoading = true
             try {
-                const response = await fetch('https://jsonplaceholder.typicode.com/users')
+                const response = await fetch(`${endpoint}/users`)
                 this.users = await response.json()
             }
             catch (error) {
@@ -38,11 +40,11 @@ export const useTodoStore = defineStore({
     }),
     actions: {
         async fetchUser(userId: string) {
-            const response = await fetch(`https://jsonplaceholder.typicode.com/users/${userId}`)
+            const response = await fetch(`${endpoint}/users/${userId}`)
             return response.json()
         },
         async fetchTodos(userId: string) {
-            const response = await fetch(`https://jsonplaceholder.typicode.com/todos?userId=${userId}`)
+            const response = await fetch(`${endpoint}/todos?userId=${userId}`)
             return response.json()
         },
         async fetchAndSetTodos(userId: string) {
