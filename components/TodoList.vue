@@ -1,6 +1,6 @@
 <template>
     <div v-show="store.isLoading">
-        Loading...
+        <Loading />
     </div>
     <div v-show="!store.isLoading">
         <h1 class="headline">
@@ -29,6 +29,8 @@
 import { onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useTodoStore } from '@/store'
+
+import Loading from '~/components/Loading.vue'
 
 const router = useRouter()
 const route = useRoute()

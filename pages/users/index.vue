@@ -9,7 +9,7 @@
         @input="onSearch"
     >
     <div v-if="store.isLoading">
-        Loading...
+        <Loading />
     </div>
     <UserTable
         v-else
@@ -25,6 +25,7 @@ import { ref, watchEffect } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useUserStore } from '@/store'
 
+import Loading from '~/components/Loading.vue'
 import UserTable from '~/components/UserTable.vue'
   
 const route = useRoute()
