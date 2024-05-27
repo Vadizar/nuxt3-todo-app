@@ -1,0 +1,43 @@
+import { defineStore } from 'pinia'
+import type { Todo } from '@/types/Todo'
+
+interface State {
+    isLoading: boolean;
+    userName: string;
+    todos: Todo[];
+}
+
+export const useTodoStore = defineStore({
+    id: 'todos',
+    state: (): State => ({
+        isLoading: false,
+        userName: '',
+        todos: [],
+    }),
+    actions: {
+        async fetchUser(userId: string) {
+            const response = await fetch(`https://jsonplaceholder.typicode.com/users/${userId}`)
+            return response.json()
+        },
+        async fetchTodos(userId: string) {
+            const response = await fetch(`https://jsonplaceholder.typicode.com/todos?userId=${userId}`)
+            return response.json()
+        },
+        async fetchAndSetTodos(userId: string) {
+            this.isLoading = true
+            try {
+                const [userData, todosData] = await Promise.all([
+                    this.fetchUser(userId),
+                    this.fetchTodos(userId)
+                ])
+
+                this.userName = userData.name
+                this.todos = todosData
+            } catch (error) {
+                console.error(error)
+            } finally {
+                this.isLoading = false
+            }
+        }
+    }
+})
